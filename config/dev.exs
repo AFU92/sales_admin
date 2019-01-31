@@ -43,4 +43,5 @@ config :sales_admin, SalesAdmin.Repo,
   password: "postgres",
   database: "sales_admin_dev",
   hostname: "localhost",
-  pool_size: 10
+  pool_size: 10,
+  types: SalesAdmin.PostgresTypes
