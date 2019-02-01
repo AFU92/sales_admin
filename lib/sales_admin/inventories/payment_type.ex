@@ -4,7 +4,7 @@ defmodule SalesAdmin.Inventories.PaymentType do
 
   schema "payment_types" do
     field(:name, :string)
-    field(:enable, :boolean)
+    field(:enabled, :boolean, default: true)
 
     has_many(:sales, Sale)
 

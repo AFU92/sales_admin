@@ -7,7 +7,7 @@ defmodule SalesAdmin.Repo.Migrations.AddProductsTable do
       add(:discription, :string, null: false)
       add(:reference_store, :string)
       add(:dimentions, {:array, :float}, null: false)
-      add(:cantidad, :float, null: false)
+      add(:quantity, :float, null: false)
       add(:image, :string, null: false)
       add(:unit_price, :float, null: false)
 

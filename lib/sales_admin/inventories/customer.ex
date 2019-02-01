@@ -6,7 +6,7 @@ defmodule SalesAdmin.Inventories.Customer do
     field(:name, :string)
     field(:last_name, :string)
     field(:document_number, :string)
-    field(:phone, {:array, :string})
+    field(:phones, {:array, :string})
     field(:address, :string)
     field(:location, Geo.Geometry)
 

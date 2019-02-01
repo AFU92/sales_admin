@@ -7,7 +7,7 @@ defmodule SalesAdmin.Inventories.Product do
     field(:discription, :string)
     field(:reference_store, :string)
     field(:dimentions, {:array, :float})
-    field(:cantidad, :float)
+    field(:quantity, :float)
     field(:image, :string)
     field(:unit_price, :float)
 
