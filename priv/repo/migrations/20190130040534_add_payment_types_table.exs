@@ -4,7 +4,7 @@ defmodule SalesAdmin.Repo.Migrations.AddPaymentTypesTable do
   def change do
     create table(:payment_types) do
       add(:name, :string, null: false)
-      add(:enable, :boolean, null: false)
+      add(:enabled, :boolean, null: false)
 
       timestamps(type: :timestamptz)
     end
