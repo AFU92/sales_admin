@@ -1,6 +1,7 @@
 defmodule SalesAdmin.Inventories do
   alias SalesAdmin.Inventories.{StoreType, Store, PaymentType, Customer, Product, Sale}
   alias SalesAdmin.Repo
+  alias Ecto.Multi
   import Ecto.Query
   # --------------------------------StoresTypes--------------------------------
 
@@ -139,16 +140,67 @@ defmodule SalesAdmin.Inventories do
   def list_sales(store_id) do
     from(s in Sale, where: s.store_id == ^store_id)
     |> Repo.all()
+    |> Repo.preload(:sale_products)
+    |> Repo.preload(sale_products: :product)
   end
 
   def get_sale(store_id, id) do
     result =
       from(s in Sale, where: s.store_id == ^store_id)
       |> Repo.get(id)
+      |> Repo.preload(:sale_products)
+      |> Repo.preload(sale_products: :product)
 
     case result do
       nil -> {:error, "Sale not found for the given id: #{id}"}
       sale -> {:ok, sale}
     end
+  end
+
+  def create_sale(sale) do
+    Multi.new()
+    |> Multi.insert(
+      :sale,
+      %Sale{}
+      |> Sale.changeset(update_sale_to_creation(sale))
+    )
+    |> update_products_quantities(sale)
+    |> Repo.transaction()
+  end
+
+  defp update_sale_to_creation(sale) do
+    sale
+    |> Map.put("sale_products", calculate_sale_product_prices(sale))
+    |> Map.put("total_price", calculate_sale_total_price(sale))
+  end
+
+  defp calculate_sale_product_prices(%{"sale_products" => sale_products}) do
+    Enum.map(sale_products, fn sale_product ->
+      total_prod_price = Map.get(sale_product, "quantity") * Map.get(sale_product, "unit_price")
+      Map.put(sale_product, "total_prod_price", total_prod_price)
+    end)
+  end
+
+  defp calculate_sale_total_price(%{"sale_products" => sale_products}) do
+    Enum.reduce(sale_products, 0, fn sale_product, acc ->
+      Map.get(sale_product, "total_prod_price") + acc
+    end)
+  end
+
+  defp update_products_quantities(multi, %{
+         "sale_products" => sale_products,
+         "store_id" => store_id
+       }) do
+    Enum.reduce(sale_products, multi, fn sale_product, acc ->
+      product_id = Map.get(sale_product, "product_id")
+      quantity = Map.get(sale_product, "quantity")
+
+      {:ok, product} = get_product(store_id, product_id)
+
+      product_update_changeset =
+        Product.changeset(product, %{quantity: product.quantity - quantity})
+
+      Multi.update(acc, String.to_atom("update_product_#{product_id}"), product_update_changeset)
+    end)
   end
 end

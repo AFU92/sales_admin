@@ -22,6 +22,11 @@ defmodule SalesAdmin.Inventories.Sale do
   def changeset(%Sale{} = sale, params \\ %{}) do
     sale
     |> cast(params, @attrs)
+    |> cast_assoc(
+      :sale_products,
+      required: true,
+      with: &SaleProduct.changeset/2
+    )
     |> validate_required(@required_attrs)
   end
 end
