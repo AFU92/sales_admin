@@ -39,6 +39,6 @@ defmodule SalesAdmin.Inventories.Store do
     store
     |> cast(params, @attrs)
     |> validate_required(@required_attrs)
-    |> unique_constraint(:name, name: :store_name_index)
+    |> unique_constraint(:name)
   end
 end
