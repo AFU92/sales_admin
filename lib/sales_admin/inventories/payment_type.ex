@@ -24,6 +24,6 @@ defmodule SalesAdmin.Inventories.PaymentType do
     payment_type
     |> cast(params, @attrs)
     |> validate_required(@required_attrs)
-    |> unique_constraint(:email, name: :payment_types_name_index)
+    |> unique_constraint(:email)
   end
 end

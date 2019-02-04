@@ -37,6 +37,6 @@ defmodule SalesAdmin.Inventories.Customer do
     customer
     |> cast(params, @attrs)
     |> validate_required(@required_attrs)
-    |> unique_constraint(:document_number, name: :customers_document_number_index)
+    |> unique_constraint(:document_number)
   end
 end

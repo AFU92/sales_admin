@@ -16,7 +16,7 @@ defmodule SalesAdmin.Inventories.SaleProduct do
   end
 
   @attrs [:quantity, :unit_price, :total_prod_price, :sale_id, :product_id]
-  @required_attrs [:quantity, :unit_price, :total_prod_price, :sale_id, :product_id]
+  @required_attrs [:quantity, :unit_price, :total_prod_price, :product_id]
 
   def changeset(%SaleProduct{} = sale_product, params \\ %{}) do
     sale_product

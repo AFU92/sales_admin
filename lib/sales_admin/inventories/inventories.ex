@@ -1,6 +1,7 @@
 defmodule SalesAdmin.Inventories do
   alias SalesAdmin.Inventories.{StoreType, Store, PaymentType, Customer, Product, Sale}
   alias SalesAdmin.Repo
+  alias SalesAdmin.Utils.GeoPointsConverter
   alias Ecto.Multi
   import Ecto.Query
   # --------------------------------StoresTypes--------------------------------
@@ -20,6 +21,19 @@ defmodule SalesAdmin.Inventories do
 
   def list_stores do
     Repo.all(Store)
+    |> convert_list_location
+  end
+
+  def convert_list_location(list) do
+    Enum.map(list, fn x ->
+      convert_location(x)
+    end)
+  end
+
+  def convert_location(struct) do
+    %{location: location} = struct
+    {:ok, location} = GeoPointsConverter.converter_from_point_to_map(location)
+    Map.put(struct, :location, location)
   end
 
   def get_store(id) do

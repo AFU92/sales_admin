@@ -40,7 +40,8 @@ defmodule SalesAdmin.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:geo, "~> 2.1"},
-      {:geo_postgis, "~> 1.0"}
+      {:geo_postgis, "~> 1.0"},
+      {:plug_cowboy, "~> 1.0"}
     ]
   end
 
