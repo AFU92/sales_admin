@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "1567b627-ca6b-4c23-9276-c897b84d1f16",
+		"name": "SalesAdmin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sales",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://0.0.0.0:4000/api/stores/1/sales",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"stores",
+								"1",
+								"sales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://0.0.0.0:4000/api/stores/1/sales/4",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"stores",
+								"1",
+								"sales",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"sale\": {\n    \t\"sale_products\": [\n        \t{\n            \t\"unit_price\": 100,\n\t            \"total_prod_price\": 1000,\n\t            \"quantity\": 10,\n\t            \"product_id\": 1\n\t        }\n\t    ],\n\t    \"payment_type_id\": 1,\n\t    \"customer_id\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://0.0.0.0:4000/api/stores/1/sales",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"stores",
+								"1",
+								"sales"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stores",
+			"item": [
+				{
+					"name": "Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://0.0.0.0:4000/api/stores",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://0.0.0.0:4000/api/stores/1",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"stores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"store_type_id\": 1,\n    \"phones\": [\n        \"316255\"\n    ],\n    \"nit\": \"1-123456\",\n    \"name\": \"Rooby's shoes\",\n    \"location\": {\n        \"longitude\": -74.058221,\n        \"latitude\": 4.693493\n    },\n    \"extra_address\": \"La casa azul con vitrinas grandes\",\n    \"address\": \"Calle 105 # 46\"\n}"
+						},
+						"url": {
+							"raw": "http://0.0.0.0:4000/api/stores",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"store_type_id\": 1,\n    \"phones\": [\n        \"316255\"\n    ],\n    \"nit\": \"1-123456\",\n    \"name\": \"Dooby's shoes\",\n    \"location\": {\n        \"longitude\": -74.058221,\n        \"latitude\": 4.693493\n    },\n    \"extra_address\": \"La casa azul con vitrinas grandes\",\n    \"address\": \"Calle 105 # 46\"\n}"
+						},
+						"url": {
+							"raw": "http://0.0.0.0:4000/api/stores/6",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"stores",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"store_type_id\": 1,\n    \"phones\": [\n        \"316255\"\n    ],\n    \"nit\": \"1-123456\",\n    \"name\": \"Dooby's shoes\",\n    \"location\": {\n        \"longitude\": -74.058221,\n        \"latitude\": 4.693493\n    },\n    \"extra_address\": \"La casa azul con vitrinas grandes\",\n    \"address\": \"Calle 105 # 46\"\n}"
+						},
+						"url": {
+							"raw": "http://0.0.0.0:4000/api/stores/6",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"stores",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

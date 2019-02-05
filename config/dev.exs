@@ -45,3 +45,4 @@ config :sales_admin, SalesAdmin.Repo,
   hostname: "localhost",
   pool_size: 10,
   types: SalesAdmin.PostgresTypes
+  port: "5432"
