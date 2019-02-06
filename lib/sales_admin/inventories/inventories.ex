@@ -164,6 +164,8 @@ defmodule SalesAdmin.Inventories do
       |> Repo.get(id)
       |> Repo.preload(:sale_products)
       |> Repo.preload(sale_products: :product)
+      |> Repo.preload(:store)
+      |> Repo.preload(:customer)
 
     case result do
       nil -> {:error, "Sale not found for the given id: #{id}"}
@@ -172,14 +174,20 @@ defmodule SalesAdmin.Inventories do
   end
 
   def create_sale(sale) do
-    Multi.new()
-    |> Multi.insert(
-      :sale,
-      %Sale{}
-      |> Sale.changeset(update_sale_to_creation(sale))
-    )
-    |> update_products_quantities(sale)
-    |> Repo.transaction()
+    case validate_sale_products(sale) do
+      [] ->
+        Multi.new()
+        |> Multi.insert(
+          :sale,
+          %Sale{}
+          |> Sale.changeset(update_sale_to_creation(sale))
+        )
+        |> update_products_quantities(sale)
+        |> Repo.transaction()
+
+      errors ->
+        {:error, errors}
+    end
   end
 
   defp update_sale_to_creation(sale) do
@@ -215,6 +223,24 @@ defmodule SalesAdmin.Inventories do
         Product.changeset(product, %{quantity: product.quantity - quantity})
 
       Multi.update(acc, String.to_atom("update_product_#{product_id}"), product_update_changeset)
+    end)
+  end
+
+  defp validate_sale_products(%{
+         "sale_products" => sale_products,
+         "store_id" => store_id
+       }) do
+    Enum.reduce(sale_products, [], fn sale_product, acc ->
+      case get_product(store_id, Map.get(sale_product, "product_id")) do
+        {:ok, product} ->
+          case product.quantity >= Map.get(sale_product, "quantity") do
+            true -> acc
+            false -> acc ++ ["there is not enought quantities for product: #{product.id}"]
+          end
+
+        {:error, msg} ->
+          acc ++ [msg]
+      end
     end)
   end
 end

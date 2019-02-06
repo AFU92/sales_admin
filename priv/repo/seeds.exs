@@ -62,7 +62,8 @@ Repo.insert!(%Product{
   discription: "White",
   reference_store: "GTW001",
   dimentions: [1.0, 1.0, 1.0],
-  quantity: 2.0,
-  image: "",
+  quantity: 50.0,
+  image: "abc",
+  store_id: shoes_store_id,
   unit_price: 100.0
 })
